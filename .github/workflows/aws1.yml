@@ -95,7 +95,7 @@ jobs:
       id: task-def-frontend
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        task-definition: .aws/task-definition.json
         container-name: frontend-container-name
         image: ${{ steps.build-image.outputs.frontend_image }}
         
@@ -103,7 +103,7 @@ jobs:
       id: task-def-api
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        task-definition: .aws/task-definition.json
         container-name: api-container-name
         image: ${{ steps.build-image.outputs.api_image }}
         
@@ -111,7 +111,7 @@ jobs:
       id: task-def-integration
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        task-definition: .aws/task-definition.json
         container-name: integration-container-name
         image: ${{ steps.build-image.outputs.integration_image }}
 
