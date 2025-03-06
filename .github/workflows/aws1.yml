@@ -79,9 +79,9 @@ jobs:
         # be deployed to ECS.
         # Build docker containers from different directories and
         # push them to ECR so that they can be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG -f frontend/Dockerfile frontend
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:api-$IMAGE_TAG -f api/Dockerfile api
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:integration-$IMAGE_TAG -f integration/Dockerfile integration
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG -f project-root/frontend/Dockerfile project-root/frontend
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:api-$IMAGE_TAG -f project-root/api/Dockerfile project-root/api
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:integration-$IMAGE_TAG -f project-root/integration/Dockerfile project-root/integration
         
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:frontend-$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:api-$IMAGE_TAG
