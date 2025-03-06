@@ -159,30 +159,6 @@ jobs:
           docker build -t $ECR_REPOSITORY:integration-${IMAGE_TAG} .
           docker push $ECR_REPOSITORY:integration-${IMAGE_TAG}
 
-      - name: Render ECS task definition for frontend container
-        id: render-frontend
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: .aws/task-definition.json
-          container-name: frontend-container-name
-          image: ${{ secrets.ECR_REPOSITORY }}:frontend-${{ github.sha }}
-
-      - name: Render ECS task definition for api container
-        id: render-api
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: .aws/task-definition.json
-          container-name: api-container-name
-          image: ${{ secrets.ECR_REPOSITORY }}:api-${{ github.sha }}
-
-      - name: Render ECS task definition for integration container
-        id: render-integration
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: .aws/task-definition.json
-          container-name: integration-container-name
-          image: ${{ secrets.ECR_REPOSITORY }}:integration-${{ github.sha }}
-
     - name: Deploy to ECS service
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
@@ -190,11 +166,13 @@ jobs:
           service: ecs_service
           cluster: my-ecs-cluster
           wait-for-service-stability: true
-        env:
+      env:
           AWS_REGION: us-east-1
           AWS_DEFAULT_REGION: us-east-1
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          ECR_REPOSITORY: my-ecr-repo
           ECS_SERVICE: ecs_service
           ECS_CLUSTER: my-ecs-cluster
           ECS_TASK_DEFINITION: .aws/task-definition.json
+          IMAGE_TAG: ${{ github.sha }}
