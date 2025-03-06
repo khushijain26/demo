@@ -91,12 +91,28 @@ jobs:
         echo "api_image=$ECR_REGISTRY/$ECR_REPOSITORY:api-$IMAGE_TAG" >> $GITHUB_OUTPUT
         echo "integration_image=$ECR_REGISTRY/$ECR_REPOSITORY:integration-$IMAGE_TAG" >> $GITHUB_OUTPUT
         
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def
+    - name: Fill in the new frontend image ID in the Amazon ECS task definition
+      id: task-def-frontend
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
-        container-name: ${{ env.CONTAINER_NAME }}
+        container-name: frontend-container-name
+        image: ${{ steps.build-image.outputs.frontend_image }}
+        
+    - name: Fill in the new api image ID in the Amazon ECS task definition
+      id: task-def-api
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        container-name: api-container-name
+        image: ${{ steps.build-image.outputs.api_image }}
+        
+    - name: Fill in the new integration image ID in the Amazon ECS task definition
+      id: task-def-integration
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        container-name: integration-container-name
         image: ${{ steps.build-image.outputs.integration_image }}
 
     - name: Deploy Amazon ECS task definition
