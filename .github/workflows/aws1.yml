@@ -65,7 +65,7 @@ jobs:
       with:
         registries: ${{ env.ECR_REPOSITORY }}
       env:
-        AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+        AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
     
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
