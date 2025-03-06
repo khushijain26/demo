@@ -1,0 +1,10 @@
+{
+    "name": "frontend-app",
+    "version": "1.0.0",
+    "description": "A basic front-end application",
+    "scripts": {
+      "start": "echo 'Serving static files via nginx'",
+      "test": "echo \"No tests yet\""
+    }
+  }
+  
