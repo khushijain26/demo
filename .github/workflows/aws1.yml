@@ -63,7 +63,7 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
       with:
-        registry: ${{ env.ECR_REPOSITORY }}
+        registries: ${{ env.ECR_REPOSITORY }}
     
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
