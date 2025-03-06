@@ -114,6 +114,14 @@ jobs:
         task-definition: .aws/task-definition.json
         container-name: integration-container-name
         image: ${{ steps.build-image.outputs.integration_image }}
+        
+    - name: Render ECS task definition
+      id: task-definition
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+          task-definition: .aws/task-definition.json
+          container-name: my-container
+          image: ${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}
 
     - name: Deploy to ECS
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
